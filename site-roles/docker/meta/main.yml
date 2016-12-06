@@ -1,12 +1,12 @@
 galaxy_info:
   author: your name
-  description: 
+  description: your description
   company: your company (optional)
-  
+
   # If the issue tracker for your role is not on github, uncomment the
   # next line and provide a value
   # issue_tracker_url: http://example.com/issue/tracker
-  
+
   # Some suggested licenses:
   # - BSD (default)
   # - MIT
@@ -15,7 +15,7 @@ galaxy_info:
   # - Apache
   # - CC-BY
   license: license (GPLv2, CC-BY, etc)
-  
+
   min_ansible_version: 1.2
 
   # Optionally specify the branch Galaxy will use when accessing the GitHub
@@ -25,7 +25,7 @@ galaxy_info:
   # branch will be accepted. Otherwise, in all cases, the repo's default branch
   # (usually master) will be used.
   #github_branch:
-  
+
   #
   # Below are all platforms currently available. Just uncomment
   # the ones that apply to your role. If you don't see your
@@ -52,7 +52,6 @@ galaxy_info:
   #  - 22
   #  - 23
   #  - 24
-  #  - 25
   #- name: DellOS
   #  versions:
   #  - all
@@ -68,10 +67,6 @@ galaxy_info:
   #  - 10.7
   #  - 10.8
   #  - 10.9
-  #- name: Synology
-  #  versions:
-  #  - all
-  #  - any
   #- name: Junos
   #  versions:
   #  - all
@@ -113,7 +108,6 @@ galaxy_info:
   #  - 10.1
   #  - 10.2
   #  - 10.3
-  #  - 11.0
   #  - 8.0
   #  - 8.1
   #  - 8.2
@@ -140,7 +134,6 @@ galaxy_info:
   #  - vivid
   #  - wily
   #  - xenial
-  #  - yakkety
   #- name: Debian
   #  versions:
   #  - all
@@ -151,10 +144,6 @@ galaxy_info:
   #  - squeeze
   #  - stretch
   #  - wheezy
-  #- name: Alpine
-  #  versions:
-  #  - all
-  #  - any
   #- name: EL
   #  versions:
   #  - all
@@ -205,7 +194,7 @@ galaxy_info:
   #  versions:
   #  - all
   #  - Any
-  
+
   galaxy_tags: []
     # List tags for your role here, one per line. A tag is
     # a keyword that describes and categorizes the role.

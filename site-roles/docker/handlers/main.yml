@@ -1,0 +1,19 @@
+---
+# handlers file for docker-engine
+#- name: Reload Systemd
+  #become: yes
+  #service: name=docker state=reloaded
+
+#- name: Restart Docker
+  #become: yes
+  #notify: Wait For Docker
+  #service: name=docker state=restarted enabled=true
+  
+#- name: Wait For Docker
+  #become: no
+  #command: docker ps
+  #register: result
+  #until: result|succeeded
+  #retries: 5
+  #delay: 5
+  #ignore_errors: yes

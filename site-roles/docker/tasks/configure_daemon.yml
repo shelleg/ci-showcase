@@ -1,0 +1,17 @@
+---
+- name: Create .docker directory for user {{ ansible_user }}
+  file:
+    path: "{{ ansible_user_dir }}/.docker"
+    state: directory
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: 0755
+
+#- name: Copy auth for registries
+#  template:
+#    src: config.json.j2
+#    dest: "{{ ansible_user_dir }}/.docker/config.json"
+#    owner: "{{ ansible_user }}"
+#    group: "{{ ansible_user }}"
+#    mode: 0644
+    

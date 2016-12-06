@@ -10,7 +10,8 @@
     state: started
     restart_policy: always
     restart: yes
-    ports:
+#    network_mode: "{{ gitlab_network_mode }}"
+    published_ports:
     - "{{ gitlab_http_port }}"
     - "{{ gitlab_https_port }}"
     - "{{ gitlab_ssh_port }}"
@@ -18,3 +19,14 @@
     - "{{ gitlab_volume_config }}"
     - "{{ gitlab_volume_log }}"
     - "{{ gitlab_volume_data }}"
+
+
+#- name: "Create Gitlab Group"
+#  local_action: gitlab_group
+#                server_url="https://localhost:8443"
+#                validate_certs=false
+#                login_user=root
+#                login_password=rootroot
+#                name=OSTKL2
+#                path=OSTKL2
+#                state=present

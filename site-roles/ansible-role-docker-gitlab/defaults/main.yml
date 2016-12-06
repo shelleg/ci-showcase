@@ -9,9 +9,10 @@ gitlab_description: "GitLab community edition"
 gitlab_container_prefix: gitlab/gitlab-ce
 gitlab_container_tag: latest
 gitlab_container_image: "{{ gitlab_container_prefix }}:{{ gitlab_container_tag }}"
-gitlab_http_port: "8080:8080"
+gitlab_http_port: "9080:80"
 gitlab_https_port: "8443:443"
 gitlab_ssh_port: "2244:22"
 gitlab_volume_config: "/srv/gitlab/config:/etc/gitlab"
 gitlab_volume_log: "/srv/gitlab/logs:/var/log/gitlab"
 gitlab_volume_data: "/srv/gitlab/data:/var/opt/gitlab"
+#gitlab_network_mode: host
