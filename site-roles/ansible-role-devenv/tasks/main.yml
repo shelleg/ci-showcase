@@ -1,0 +1,13 @@
+---
+# tasks file for ansible-role-devenv
+
+
+# install java
+# install vim
+# install pycharm
+# docker - prereq
+# install git - prereq
+# validate ansible version
+# install chrome
+
+- include: chrome.yml

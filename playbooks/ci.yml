@@ -1,0 +1,17 @@
+---
+
+- hosts: localhost
+  roles:
+    - role: ansible-role-devenv
+      tags: devenv
+
+    - role: oracle-java
+      tags: java
+
+- hosts: localhost
+  roles:
+    - role: docker
+      tags: docker
+
+    - role: ansible-role-docker-gitlab
+      tags: gitlab

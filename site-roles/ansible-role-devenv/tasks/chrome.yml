@@ -1,0 +1,23 @@
+---
+
+- include_vars: chrome.yml
+
+- name: "Add chrome ppa key"
+  apt_key:
+    data: "{{ lookup('file', 'chrome-apt.key') }}"
+    state: present
+
+- name: "Add chrome PPA"
+  apt_repository:
+    repo: "{{ chrome_apt_repo_url }}"
+    state: present
+
+- name: "apt get update"
+  apt:
+    update_cache: yes
+
+
+- name: "install chrome"
+  apt:
+    name: google-chrome-stable
+    state: latest

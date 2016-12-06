@@ -1,0 +1,21 @@
+---
+
+- src: https://github.com/savoirfairelinux/ansible-nexus3-oss.git
+  name: nexus
+
+- src: https://github.com/geerlingguy/ansible-role-jenkins.git
+  name: jenkins
+
+- src: https://github.com/geerlingguy/ansible-role-gitlab.git
+  name: gitlab 
+
+- src: brianshumate.hubot
+  name: hubot
+
+- src: https://github.com/shelleg/ansible-role-docker-daemon.git
+  version: master
+  name: docker
+
+- src: https://github.com/shelleg/ansible-role-oracle-java.git
+  version: master
+  name: oracle-java

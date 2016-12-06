@@ -1,0 +1,20 @@
+---
+# tasks file for ansible-role-docker-gitlab
+
+- include: docker-reqs.yml
+
+- docker_container:
+    name: "{{ gitlab_container_name }}"
+    hostname: "{{ gitlab_container_name }}"
+    image: "{{ gitlab_container_image }}"
+    state: started
+    restart_policy: always
+    restart: yes
+    ports:
+    - "{{ gitlab_http_port }}"
+    - "{{ gitlab_https_port }}"
+    - "{{ gitlab_ssh_port }}"
+    volumes:
+    - "{{ gitlab_volume_config }}"
+    - "{{ gitlab_volume_log }}"
+    - "{{ gitlab_volume_data }}"
