@@ -37,3 +37,13 @@
     # since this plugin also updates all of the Jenkins plugins automatically.
     state: latest
   become: true
+
+- name: "Set permissions"
+  file:
+    path: "{{ item }}"
+    recurse: yes
+    owner: "{{ jenkins_user }}"
+  with_items:
+  - "/var/lib/jenkins"
+  - "/var/log/jenkins"
+  - "/var/cache/jenkins"
