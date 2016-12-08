@@ -47,9 +47,18 @@ jenkins_plugins_recommended:
   - workflow-aggregator
   - github-organization-folder
   - ws-cleanup
+  - seed
+  - build-flow-plugin
+  - multiple-scms
+  - nodejs
+  - clone-workspace-scm
+  - blueocean
 
-# The additional plugins that users of this role would like to be installed 
+
+# The additional plugins that users of this role would like to be installed
 # (must be overridden).
-jenkins_plugins_extra: []
-jenkins_user: user
-jenkins_group: user
+jenkins_plugins_extra:
+
+
+jenkins_user: "{{ context_user |d('user')}}"
+jenkins_group: "{{ context_group |d('user')}}"
