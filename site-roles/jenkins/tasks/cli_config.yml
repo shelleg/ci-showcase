@@ -91,9 +91,12 @@
     mode: 0444
   become: true
 
+- pause:
+    seconds: 30
+
 - name: Verify CLI
   shell: "java -jar /opt/jenkins/jenkins-cli.jar -s http://localhost:{{ jenkins_port }}{{ jenkins_context_path | default('') }} who-am-i"
   register: cli_whoami
   become: true
-  become_user: jenkins
+  become_user: root
   changed_when: false

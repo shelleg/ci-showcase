@@ -1,6 +1,4 @@
 ---
-
-
 - name: "Update APT Cache"
   apt:
     update_cache: yes
@@ -29,12 +27,16 @@
     update_cache: yes
   become: true
 
+- name: "Purge old Jenkins"
+  apt:
+    name: jenkins
+    state: absent
+    purge: yes
+  when: (purge is defined) and (purge |bool)
+
 - name: Jenkins Install
   apt:
     name: jenkins
-#    name: jenkins="{{ jenkins_version }}"
-    # Setting this to 'latest' is perhaps debatable, but it seems silly not to
-    # since this plugin also updates all of the Jenkins plugins automatically.
     state: latest
   become: true
 

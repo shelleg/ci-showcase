@@ -44,7 +44,7 @@
     name: jenkins
     state: restarted
   register: started
-  when: (sysconfig_updated|changed)
+ # when: (sysconfig_updated|changed)
 
 # This is required because the default args don't include the '--prefix' option.
 - name: Configure Command Line Arguments
