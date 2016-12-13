@@ -1,0 +1,11 @@
+---
+- name: "copy plugins from provided external dir [ should be excluded with -e ]"
+  copy:
+    src: "{{ external_plugins_dir }}/{{ item }}.jpi"
+    dest: "{{ jenkins_home }}/plugins/{{ item }}.jpi"
+    owner: "{{ jenkins_user }}"
+    group: "{{ jenkins_group }}"
+  with_items:
+    - "{{ jenkins_plugins_recommended }}"
+  when: external_plugins_dir is defined
+

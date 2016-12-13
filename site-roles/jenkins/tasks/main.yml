@@ -1,5 +1,16 @@
 ---
 
+- name: "ensure github.com is a known host"
+  lineinfile:
+    dest: "{{ item }}"
+    create: yes
+    state: present
+    line: "{{ lookup('pipe', 'ssh-keyscan -t rsa github.com') }}"
+    regexp: "^github\\.com"
+  with_items:
+  - /home/user/.ssh/known_hosts
+  - /root/.ssh/known_hosts
+
 # Install all OS packages (including Jenkins itself).
 - include: "packages_{{ ansible_os_family }}.yml"
 
@@ -8,6 +19,12 @@
 
 # Enable the Jenkins CLI.
 - include: "cli_config.yml"
+
+# copy plugins is external_plugins_dir is set
+- block:
+  - include: "copy_plugins.yml"
+  - include: "reload_jenkins.yml"
+  when: external_plugins_dir is defined
 
 # Install and/or update plugins.
 - include: "plugins.yml"
@@ -28,7 +45,7 @@
   become: true
 
 - name: Grab Jenkins Web UI Content
-  # By default, Jenkins 2 is set to require auth, so the only page we can grab 
+  # By default, Jenkins 2 is set to require auth, so the only page we can grab
   # without getting a 403 and redirect is the login page.
   uri:
     url: "http://localhost:{{ jenkins_port }}{{ jenkins_context_path | default('') }}/login"
@@ -38,3 +55,13 @@
 - name: Verify Jenkins Web UI Content
   action: fail
   when: jenkins_ui.content.find('Jenkins ver. 2') == -1
+
+- name: "Validate existing WORK dir"
+  file:
+    path: "{{ work_dir }}"
+    owner: "{{ jenkins_user }}"
+    group: "{{ jenkins_group }}"
+    state: directory
+
+- include: "seed_job.yml"
+  tags: update_job

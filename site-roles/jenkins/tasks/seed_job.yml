@@ -1,0 +1,28 @@
+---
+- name: "Create jobs directory"
+  file:
+    path: "{{ jenkins_home }}/jobs/{{ item }}"
+    state: directory
+    owner: "{{ jenkins_user }}"
+    group: "{{ jenkins_group }}"
+  with_items:
+  - seed
+
+- name: "copy seed job to place"
+  copy:
+    src: "{{ item }}-config.xml"
+    dest: "{{ jenkins_home }}/jobs/{{ item }}/config.xml"
+    owner: "{{ jenkins_user }}"
+    group: "{{ jenkins_group }}"
+  with_items:
+  - seed
+  notify:
+    - "Restart Service 'jenkins'"
+
+- include: "reload_jenkins.yml"
+
+- name: "Trigger seed job"
+  shell: "java -jar /opt/jenkins/jenkins-cli.jar -s http://localhost:{{ jenkins_port }}{{ jenkins_context_path | default('') }} build {{ item }}; sleep 5"
+  with_items:
+  - seed
+  - OSTKL-init

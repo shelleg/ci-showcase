@@ -46,6 +46,6 @@
     recurse: yes
     owner: "{{ jenkins_user }}"
   with_items:
-  - "/var/lib/jenkins"
-  - "/var/log/jenkins"
-  - "/var/cache/jenkins"
+  - "{{ jenkins_home }}"
+  - "{{ jenkins_log_dir }}"
+  - "{{ jenkins_cache_dir }}"

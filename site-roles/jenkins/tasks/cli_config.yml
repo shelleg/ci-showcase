@@ -5,10 +5,10 @@
 # Enables the Jenkins CLI and configures the 'admin' account so that it can be
 # used to connect to the CLI.
 
-- name: Create Jenkins Init Script Directory
+- name: "Create Jenkins Init Script Directory"
   # Reference: https://wiki.jenkins-ci.org/display/JENKINS/Post-initialization+script
   file:
-    path: /var/lib/jenkins/init.groovy.d
+    path: "{{ jenkins_home }}/init.groovy.d"
     state: directory
     owner:  "{{ jenkins_user }}"
     group:  "{{ jenkins_group }}"
@@ -18,7 +18,7 @@
 - name: Jenkins Script - Configure Slave Agent Port
   template:
     src: slaveAgentPort.groovy
-    dest: /var/lib/jenkins/init.groovy.d/slaveAgentPort.groovy
+    dest: "{{ jenkins_home }}/init.groovy.d/slaveAgentPort.groovy"
     owner:  "{{ jenkins_user }}"
     group:  "{{ jenkins_group }}"
     mode: 0744
@@ -26,25 +26,48 @@
   notify:
     - "Restart Service 'jenkins'"
 
-- name: Generate SSH Keys for jenkins Service Account
-  user:
-    name: jenkins
-    generate_ssh_key: yes
-  become: true
+#- name: Generate SSH Keys for jenkins Service Account
+#  user:
+#    name: jenkins
+#    generate_ssh_key: yes
+#  become: true
 
-- name: Read SSH Public Key for jenkins Service Account
-  shell: cat /var/lib/jenkins/.ssh/id_rsa.pub
+- name: "Deploy ssh keys"
+  copy:
+    src: "{{ item }}"
+    dest: /home/user/.ssh/
+  with_items:
+  - id_rsa.pub
+  - id_rsa
+
+- name: "Deploy ssh keys"
+  copy:
+    src: "{{ item }}"
+    dest: "{{ jenkins_home }}/.ssh/"
+  with_items:
+  - id_rsa.pub
+  - id_rsa
+
+- name: "Deploy ssh keys"
+  copy:
+    src: "{{ item }}"
+    dest: "{{ jenkins_home }}"
+  with_items:
+  - credentials.xml
+
+- name: "Read SSH Public Key for jenkins Service Account"
+  shell: cat "{{ jenkins_home }}/.ssh/id_rsa.pub"
   become: true
   changed_when: false
   register: jenkins_user_ssh_public_file
 
-- name: Parse SSH Public Key for jenkins Service Account
+- name: "Parse SSH Public Key for jenkins Service Account"
   set_fact: jenkins_user_ssh_public_key="{{ jenkins_user_ssh_public_file.stdout_lines[0] }}"
 
 - name: Jenkins Script - Configure SSH Keys for admin
   template:
     src: adminSshKeys.groovy
-    dest: /var/lib/jenkins/init.groovy.d/adminSshKeys.groovy
+    dest: "{{ jenkins_home }}/init.groovy.d/adminSshKeys.groovy"
     owner:  "{{ jenkins_user }}"
     group:  "{{ jenkins_group }}"
     mode: 0744
@@ -55,7 +78,7 @@
 - name: Jenkins Script - Refresh Update Center
   template:
     src: updateCenterRefresh.groovy
-    dest: /var/lib/jenkins/init.groovy.d/updateCenterRefresh.groovy
+    dest: "{{ jenkins_home }}/init.groovy.d/updateCenterRefresh.groovy"
     owner:  "{{ jenkins_user }}"
     group:  "{{ jenkins_group }}"
     mode: 0744
@@ -92,7 +115,7 @@
   become: true
 
 - pause:
-    seconds: 30
+    seconds: 10
 
 - name: Verify CLI
   shell: "java -jar /opt/jenkins/jenkins-cli.jar -s http://localhost:{{ jenkins_port }}{{ jenkins_context_path | default('') }} who-am-i"
