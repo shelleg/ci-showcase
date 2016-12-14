@@ -39,15 +39,19 @@ job(&apos;OSTKL-reqs&apos;) {
   wrappers {
     runOnSameNodeAs(&apos;OSTKL-init&apos;, true)
   }
-  scm {
-    git {
-      remote {
-        name(&apos;origin&apos;)
-        url(&apos;git@github.com:tikalk/OSTK-playbook.git&apos;)
-        credentials(&apos;ostkl-admin&apos;)
-      }
-      branch(&apos;jenkins_ci&apos;)
-    }
+  steps {
+    shell(&apos;cd /opt/tikal/deploy; ./deploy.sh reqs&apos;)
+  }
+  publishers {
+    downstream(&apos;OSTKL-image&apos;,&apos;SUCCESS&apos;)
+  }
+
+}
+
+job(&apos;OSTKL-image&apos;) {
+  customWorkspace(&apos;/opt/tikal&apos;);
+  wrappers {
+    runOnSameNodeAs(&apos;OSTKL-init&apos;, true)
   }
   steps {
     shell(&apos;cd /opt/tikal/deploy; ./deploy.sh reqs&apos;)
@@ -63,63 +67,39 @@ job(&apos;OSTKL-vagrant&apos;) {
   wrappers {
     runOnSameNodeAs(&apos;OSTKL-init&apos;, true)
   }
-  scm {
-    git {
-      remote {
-        name(&apos;origin&apos;)
-        url(&apos;git@github.com:tikalk/OSTK-playbook.git&apos;)
-        credentials(&apos;ostkl-admin&apos;)
-      }
-      branch(&apos;jenkins_ci&apos;)
-    }
-  }
   steps {
     shell(&apos;cd /opt/tikal/deploy; ./deploy.sh vagrant&apos;)
+  }
+  publishers {
+    downstream(&apos;OSTKL-slave&apos;,&apos;SUCCESS&apos;)
+  }
+}
+
+job(&apos;OSTKL-slave&apos;) {
+  customWorkspace(&apos;/opt/tikal&apos;);
+  label(&apos;sanjer&apos;)
+  steps {
+    shell(&apos;cd /opt/tikal/deploy; ./deploy.sh server&apos;)
   }
   publishers {
     downstream(&apos;OSTKL-server&apos;,&apos;SUCCESS&apos;)
   }
-
 }
-
 job(&apos;OSTKL-server&apos;) {
   customWorkspace(&apos;/opt/tikal&apos;);
   label(&apos;sanjer&apos;)
-  scm {
-    git {
-      remote {
-        name(&apos;origin&apos;)
-        url(&apos;git@github.com:tikalk/OSTK-playbook.git&apos;)
-        credentials(&apos;ostkl-admin&apos;)
-      }
-      branch(&apos;jenkins_ci&apos;)
-    }
-  }
   steps {
-    shell(&apos;cd /opt/tikal/deploy; ./deploy.sh vagrant&apos;)
+    shell(&apos;cd /opt/tikal/deploy; ./deploy.sh server&apos;)
   }
   publishers {
     downstream(&apos;OSTKL-pubkey&apos;,&apos;SUCCESS&apos;)
   }
-
 }
-
-
 
 job(&apos;OSTKL-pubkey&apos;) {
   customWorkspace(&apos;/opt/tikal&apos;);
   wrappers {
     runOnSameNodeAs(&apos;OSTKL-server&apos;, true)
-  }
-  scm {
-    git {
-      remote {
-        name(&apos;origin&apos;)
-        url(&apos;git@github.com:tikalk/OSTK-playbook.git&apos;)
-        credentials(&apos;ostkl-admin&apos;)
-      }
-      branch(&apos;jenkins_ci&apos;)
-    }
   }
   steps {
     shell(&apos;cd /opt/tikal/deploy; ./deploy.sh pubkey&apos;)
@@ -134,23 +114,12 @@ job(&apos;OSTKL-net&apos;) {
   wrappers {
     runOnSameNodeAs(&apos;OSTKL-server&apos;, true)
   }
-  scm {
-    git {
-      remote {
-        name(&apos;origin&apos;)
-        url(&apos;git@github.com:tikalk/OSTK-playbook.git&apos;)
-        credentials(&apos;ostkl-admin&apos;)
-      }
-      branch(&apos;jenkins_ci&apos;)
-    }
-  }
   steps {
     shell(&apos;cd /opt/tikal/deploy; ./deploy.sh net&apos;)
   }
   publishers {
     downstream(&apos;OSTKL-base&apos;,&apos;SUCCESS&apos;)
   }
-
 }
 
 job(&apos;OSTKL-base&apos;) {
@@ -158,20 +127,9 @@ job(&apos;OSTKL-base&apos;) {
   wrappers {
     runOnSameNodeAs(&apos;OSTKL-server&apos;, true)
   }
-  scm {
-    git {
-      remote {
-        name(&apos;origin&apos;)
-        url(&apos;git@github.com:tikalk/OSTK-playbook.git&apos;)
-        credentials(&apos;ostkl-admin&apos;)
-      }
-      branch(&apos;jenkins_ci&apos;)
-    }
-  }
   steps {
     shell(&apos;cd /opt/tikal/deploy; ./deploy.sh base&apos;)
   }
-
 }
 
 
