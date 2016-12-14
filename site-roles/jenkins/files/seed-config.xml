@@ -14,7 +14,7 @@
     <javaposse.jobdsl.plugin.ExecuteDslScripts plugin="job-dsl@1.53">
       <scriptText>job(&apos;OSTKL-init&apos;) {
   customWorkspace(&apos;/opt/tikal&apos;);
-  label(&apos;master&apos;)
+  label(&apos;localroot&apos;)
   scm {
     git {
       remote {

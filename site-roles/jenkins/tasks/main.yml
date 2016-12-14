@@ -63,5 +63,19 @@
     group: "{{ jenkins_group }}"
     state: directory
 
+- name: "Create localroot slave dir"
+  file:
+    path: "{{ jenkins_home }}/nodes"
+    owner: "{{ jenkins_user }}"
+    group: "{{ jenkins_group }}"
+    state: directory
+
+- name: "Deploy localroot slave XML"
+  copy:
+    src: "{{ item }}"
+    dest: "{{ jenkins_home }}/nodes/config.xml"
+  with_items:
+  - "localroot-config.xml"
+
 - include: "seed_job.yml"
   tags: update_job
