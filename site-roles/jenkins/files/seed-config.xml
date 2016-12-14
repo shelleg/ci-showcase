@@ -54,7 +54,7 @@ job(&apos;OSTKL-image&apos;) {
     runOnSameNodeAs(&apos;OSTKL-init&apos;, true)
   }
   steps {
-    shell(&apos;cd /opt/tikal/deploy; ./deploy.sh reqs&apos;)
+    shell(&apos;cd /opt/tikal/deploy; ./deploy.sh image&apos;)
   }
   publishers {
     downstream(&apos;OSTKL-vagrant&apos;,&apos;SUCCESS&apos;)
