@@ -37,14 +37,14 @@
   with_items:
   - "/opt/jenkins"
 
-- name: Ensure Service 'jenkins' Is Running
+- name: "Ensure Service 'jenkins' Is Running"
   service:
     name: jenkins
     state: started
     enabled: yes
   become: true
 
-- name: Grab Jenkins Web UI Content
+- name: "Grab Jenkins Web UI Content"
   # By default, Jenkins 2 is set to require auth, so the only page we can grab
   # without getting a 403 and redirect is the login page.
   uri:
@@ -52,7 +52,7 @@
     return_content: true
   register: jenkins_ui
 
-- name: Verify Jenkins Web UI Content
+- name: "Verify Jenkins Web UI Content"
   action: fail
   when: jenkins_ui.content.find('Jenkins ver. 2') == -1
 
@@ -65,17 +65,31 @@
 
 - name: "Create localroot slave dir"
   file:
-    path: "{{ jenkins_home }}/nodes"
+    path: "{{ jenkins_home }}/{{ item }}"
     owner: "{{ jenkins_user }}"
     group: "{{ jenkins_group }}"
     state: directory
+  with_items:
+  - "nodes"
+  - "nodes/localroot"
+  - "nodes/sanjer"
 
-- name: "Deploy localroot slave XML"
+- name: "Deploy slave XML"
   copy:
     src: "{{ item }}"
-    dest: "{{ jenkins_home }}/nodes/config.xml"
+    dest: "{{ jenkins_home }}/nodes/{{ item.split('-')[0] }}/config.xml"
   with_items:
   - "localroot-config.xml"
+  - "sanjer-config.xml"
+  tags:
+    - slave
+
+- name: "Deploy Credentials"
+  copy: 
+    src: "{{ item }}"
+    dest: "{{ jenkins_home }}"
+  with_items:
+  - "credentials.xml"
 
 - include: "seed_job.yml"
   tags: update_job

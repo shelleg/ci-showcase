@@ -1,18 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <slave>
-  <name>localroot</name>
+  <name>sanjer</name>
   <description></description>
-  <remoteFS>/tmp/localroot</remoteFS>
+  <remoteFS>/tmp/sanjer</remoteFS>
   <numExecutors>1</numExecutors>
   <mode>EXCLUSIVE</mode>
   <retentionStrategy class="hudson.slaves.RetentionStrategy$Always"/>
   <launcher class="hudson.plugins.sshslaves.SSHLauncher" plugin="ssh-slaves@1.12">
-    <host></host>
+    <host>10.0.10.1</host>
     <port>22</port>
-    <credentialsId>4c16525f-c012-47a0-98b3-f58069201edf</credentialsId>
+    <credentialsId>66251da6-ee56-4e18-bfb7-1aac994e10c4</credentialsId>
     <maxNumRetries>0</maxNumRetries>
     <retryWaitTime>0</retryWaitTime>
   </launcher>
-  <label>localroot</label>
+  <label>sanjer</label>
   <nodeProperties/>
 </slave>

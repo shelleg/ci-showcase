@@ -31,7 +31,6 @@
   publishers {
     downstream(&apos;OSTKL-reqs&apos;,&apos;SUCCESS&apos;)
   }
-  
 }
 
 job(&apos;OSTKL-reqs&apos;) {
@@ -45,7 +44,6 @@ job(&apos;OSTKL-reqs&apos;) {
   publishers {
     downstream(&apos;OSTKL-image&apos;,&apos;SUCCESS&apos;)
   }
-
 }
 
 job(&apos;OSTKL-image&apos;) {
@@ -59,7 +57,6 @@ job(&apos;OSTKL-image&apos;) {
   publishers {
     downstream(&apos;OSTKL-vagrant&apos;,&apos;SUCCESS&apos;)
   }
-
 }
 
 job(&apos;OSTKL-vagrant&apos;) {
@@ -75,21 +72,10 @@ job(&apos;OSTKL-vagrant&apos;) {
     shell(&apos;ssh-keyscan -H 10.0.10.1 &gt;&gt; ~/.ssh/known_hosts&apos;)
   }
   publishers {
-    downstream(&apos;OSTKL-slave&apos;,&apos;SUCCESS&apos;)
-  }
-}
-
-job(&apos;OSTKL-slave&apos;) {
-  customWorkspace(&apos;/opt/tikal&apos;);
-  label(&apos;localroot&apos;)
-  steps {
-    shell(&apos;ssh root@10.0.10.1 wget -O /tmp/slave.jar http://192.168.1.9:8080/jnlpJars/slave.jar&apos;)
-    shell(&apos;java -jar /tmp/slave.jar -jnlpUrl http://192.168.1.9:8080/computer/sanjer/slave-agent.jnlp &amp;&apos;)
-  }
-  publishers {
     downstream(&apos;OSTKL-server&apos;,&apos;SUCCESS&apos;)
   }
 }
+
 job(&apos;OSTKL-server&apos;) {
   customWorkspace(&apos;/opt/tikal&apos;);
   label(&apos;sanjer&apos;)
