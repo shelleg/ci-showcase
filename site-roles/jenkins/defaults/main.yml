@@ -26,6 +26,10 @@ jenkins_context_path: ''
 # this list will likely need to be modified to include the user ID of one of a
 # valid user from that realm (unless it also happens to have an `admin` 
 # account).
+
+jenkins_admin_username: ostkl-admin
+jenkins_admin_password: qwe123
+
 jenkins_admin_users:
   - 'hudson.security.HudsonPrivateSecurityRealm:admin'
 

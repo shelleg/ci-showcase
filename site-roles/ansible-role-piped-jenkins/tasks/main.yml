@@ -1,0 +1,49 @@
+---
+# tasks file for ansible-role-piped-jenkins
+
+#- name: "Include Debain / Redhat OS vars"
+#  include_vars: "{{ ansible_os_family }}.yml"
+#
+#- name: "Define jenkins_repo_url fact to {{ jenkins_repo_url_latest_lts }}"
+#  set_fact:
+#    jenkins_repo_url: "{{ jenkins_repo_url_latest_lts }}"
+#  when: jenkins_version == 'latest-LTS'
+#
+#- name: "Define jenkins_repo_url fact to {{ jenkins_repo_url_gratest_n_latest }}"
+#  set_fact:
+#    jenkins_repo_url: "{{ jenkins_repo_url_gratest_n_latest }}"
+#  when: jenkins_version == 'latest'
+#
+#- name: "Include Debain / Redhat OS installaion method"
+#  include: "{{ ansible_os_family }}_install.yml"
+#
+#- name: "Setup Jenkins User"
+#  include: "jenkins_run_as.yml"
+#
+#- name: "Configure Jenkins via {{ jenkins_conf_file }}"
+#  template:
+#    src: "jenkins-config-{{ ansible_os_family }}.j2"
+#    dest: "{{ jenkins_conf_file }}"
+#    mode: 0755
+#    owner: root
+#    group: root
+#
+#- name: "Copy jenkins Init scripts for post installation procedures agains Jenkins Api"
+#  include: "jenkins_init-config.yml"
+
+#- set_fact:
+#    my_plugins: "{% ' '.join(jenkins_recommended_plugins) %}"
+
+- name: "Configure Jenkins via {{ jenkins_conf_file }}"
+  template:
+    src: "install_plugins.groovy"
+    dest: "/tmp/install_plugins.groovy"
+    mode: 0755
+    owner: root
+    group: root
+#  with_items:
+#    - "{{ jenkins_recommended_plugins }}"
+
+- fetch:
+    src: "/tmp/install_plugins.groovy"
+    dest: "/tmp/install_plugins.groovy"

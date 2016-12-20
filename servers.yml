@@ -1,0 +1,20 @@
+---
+- name: dev-ubuntu
+  box: bento/ubuntu-16.04
+  box_version: '2.2.7'
+  provider: virtualbox
+  ram: 1024
+  ip: 172.16.1.150
+  username: vagrant
+  passowrd: vagrant
+
+- name: dev-centos
+  box: 'holms/vagrant-centos7-box'
+  box_url: 'https://github.com/holms/vagrant-centos7-box/releases/download/7.1.1503.001/CentOS-7.1.1503-x86_64-netboot.box'
+  box_version: '2.3.1'
+  ip: 172.16.1.151
+  provider: virtualbox
+  ram: 1024
+  gui: false
+  username: vagrant
+  passowrd: vagrant

@@ -1,0 +1,142 @@
+---
+# defaults file for ansible-role-piped-jenkins
+
+# Listen port
+jenkins_port: 8080
+
+# could be latest || latest-LTS
+jenkins_version: latest-LTS
+
+# some like to see /jenkins as a suffix I don't ... ;)
+jenkins_application_context: ''
+
+# Directories used by Jenkins [ Apt || Rpm ]
+jenkins_home: /var/lib/jenkins
+jenkins_log_dir: /var/log/jenkins
+jenkins_cache_dir: /var/cache/jenkins
+jenkins_init_dir: "{{ jenkins_home }}/init.groovy.d"
+jenkins_webroot: /var/cache/jenkins/war
+# jenkins 2 requires skip wizrd param
+# chenge this to true if you really want it ;)
+jenkins_disale_startup_wizerd: "false" # String becuase the jvm arg becomes False ...
+
+jenkins_jvm_args: "-Djava.awt.headless=true"
+jenkins_cmd_args: "--webroot={{ jenkins_webroot }} --httpPort={{ jenkins_port }} -Djenkins.install.runSetupWizard={{ jenkins_disale_startup_wizerd }}"
+
+# The system level user Jenkins should runas
+jenkins_runas_user: user
+jenkins_runas_group: user
+jenkins_runas_sudoer: true
+
+# Authorization strategy basic
+jenkins_admin_username: admin
+jenkins_admin_password: qwe123
+
+
+
+jenkins_recommended_plugins:
+  - cloudbees-folder
+  - antisamy-markup-formatter
+  - github
+  - workflow-basic-steps
+  - matrix-project
+  - blueocean-pipeline-api-impl
+  - pipeline-milestone-step
+  - nodejs
+  - blueocean-web
+  - blueocean-autofavorite
+  - workflow-job
+  - durable-task
+  - mapdb-api
+  - workflow-scm-step
+  - envinject
+  - maven-plugin
+  - build-timeout
+  - git-server
+  - blueocean-jwt
+  - credentials
+  - blueocean-commons
+  - docker-workflow
+  - metrics
+  - workflow-api
+  - plain-credentials
+  - windows-slaves
+  - pipeline-stage-view
+  - blueocean-rest
+  - multiple-scms
+  - blueocean-events
+  - ws-cleanup
+  - authentication-tokens
+  - blueocean-display-url
+  - ssh-credentials
+  - pipeline-graph-analysis
+  - variant
+  - sse-gateway
+  - scm-api
+  - bouncycastle-api
+  - workflow-cps-global-lib
+  - gradle
+  - blueocean-i18n
+  - ace-editor
+  - workflow-multibranch
+  - build-flow-plugin
+  - workflow-durable-task-step
+  - git-client
+  - credentials-binding
+  - junit
+  - ssh-slaves
+  - pam-auth
+  - handlebars
+  - description-setter
+  - blueocean-personalization
+  - favorite
+  - pipeline-build-step
+  - blueocean-dashboard
+  - blueocean-rest-impl
+  - display-url-api
+  - script-security
+  - github-api
+  - momentjs
+  - branch-api
+  - email-ext
+  - jquery-detached
+  - subversion
+  - ant
+  - pipeline-model-api
+  - conditional-buildstep
+  - pipeline-model-definition
+  - mailer
+  - run-condition
+  - workflow-aggregator
+  - workflow-step-api
+  - github-branch-source
+  - pipeline-model-declarative-agent
+  - structs
+  - parameterized-trigger
+  - pipeline-input-step
+  - seed
+  - resource-disposer
+  - javadoc
+  - timestamper
+  - pipeline-stage-step
+  - github-organization-folder
+  - external-monitor-job
+  - workflow-cps
+  - token-macro
+  - job-dsl
+  - blueocean
+  - matrix-auth
+  - ldap
+  - jackson2-api
+  - clone-workspace-scm
+  - docker-commons
+  - icon-shim
+  - pipeline-rest-api
+  - git
+  - blueocean-config
+  - workflow-support
+  - job-node-stalker
+  - ansicolor
+  - nested-view
+  - jquery
+  - build-pipeline-plugin

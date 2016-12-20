@@ -1,0 +1,17 @@
+---
+- name: "Add user group"
+  group:
+    name: user
+
+- name: "Add user user"
+  user:
+    name: user
+    group: user
+
+- name: "Configure user user as sudoer"
+  template:
+    src: user
+    dest: /etc/sudoers.d/user
+    mode: 0644
+    owner: root
+    group: root

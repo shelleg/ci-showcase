@@ -11,3 +11,4 @@
 # install chrome
 
 - include: chrome.yml
+- include: user.yml

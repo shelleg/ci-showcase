@@ -1,0 +1,42 @@
+---
+- name: "Update apt cache"
+  apt:
+    update_cache: yes
+    cache_valid_time: 86400
+
+- name: "install deps"
+  apt:
+    name: "{{ item }}"
+    state: installed
+  with_items:
+    - python-httplib2
+    - acl
+    - vim
+
+- name: "Add Jenkins apt Key"
+  apt_key:
+    url: "{{ jenkins_repo_key_url }}"
+    state: present
+  become: true
+
+- name: "Add Jenkins apt repo"
+  apt_repository:
+    repo: "{{ jenkins_repo_url }}"
+    state: present
+    update_cache: yes
+  become: true
+
+# in case we want to totally remove /var/lib/jenkins and it's pacadges
+- name: "Purge old Jenkins"
+  apt:
+    name: jenkins
+    state: absent
+    purge: yes
+  when: (purge is defined) and (purge |bool)
+
+- name: "Jenkins Install"
+  apt:
+    name: jenkins
+    state: latest
+  become: true
+

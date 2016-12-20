@@ -1,0 +1,41 @@
+---
+
+
+
+
+
+- name: "install deps"
+  package:
+    name:
+      - curl
+      - libselinux-python
+      - vim
+      - net-tools
+    state: installed
+
+
+- name: "Add jenkins rpm key"
+  rpm_key:
+    state: present
+    key: "{{ jenkins_repo_key_url }}"
+
+
+- name: "Add Jenkins rpm repo"
+  get_url:
+    url: "{{ jenkins_repo_url }}"
+    dest: /etc/yum.repos.d/jenkins.repo
+
+
+
+# in case we want to totally remove /var/lib/jenkins and it's pacadges
+- name: "Purge old Jenkins"
+  yum:
+    name: jenkins
+    state: absent
+  when: (purge is defined) and (purge |bool)
+
+
+- name: "Jenkins Install"
+  package:
+    name: jenkins
+    state: installed
