@@ -7,7 +7,7 @@ require 'yaml'
 # variables :
 VAGRANT_DIR = File.expand_path(File.dirname(__FILE__))
 VAGRANTFILE_API_VERSION = "2"
-Vagrant.require_version "1.8.4"
+Vagrant.require_version ">=1.8.4"
 
 # Read YAML file with box details
 servers = YAML.load_file('servers.yml')
