@@ -20,8 +20,8 @@ jenkins_webroot: /var/cache/jenkins/war
 # chenge this to true if you really want it ;)
 jenkins_disale_startup_wizerd: "false" # String becuase the jvm arg becomes False ...
 
-jenkins_jvm_args: "-Djava.awt.headless=true"
-jenkins_cmd_args: "--webroot={{ jenkins_webroot }} --httpPort={{ jenkins_port }} -Djenkins.install.runSetupWizard={{ jenkins_disale_startup_wizerd }}"
+jenkins_jvm_args: "-Djava.awt.headless=true -Djenkins.install.runSetupWizard={{ jenkins_disale_startup_wizerd }}"
+jenkins_cmd_args: "--webroot={{ jenkins_webroot }} --httpPort={{ jenkins_port }}"
 
 # The system level user Jenkins should runas
 jenkins_runas_user: user

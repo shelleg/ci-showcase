@@ -2,3 +2,4 @@
 .idea/
 playbooks/*.retry
 .vagrant
+./log/ansible.log

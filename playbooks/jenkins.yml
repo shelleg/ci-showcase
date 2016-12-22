@@ -1,14 +1,10 @@
 ---
 
-- hosts: dev-ubuntu
+- hosts: localhost
   become: true
   roles:
     - role: ansible-role-devenv
       tags: devenv
-
-- hosts: dev-ubuntu,dev-centos
-  become: true
-  roles:
     - role: oracle-java
       tags: java
     - role: ansible-role-piped-jenkins
