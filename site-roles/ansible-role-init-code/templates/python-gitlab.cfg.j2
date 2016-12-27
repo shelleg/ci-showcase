@@ -4,5 +4,5 @@ ssl_verify = false
 timeout = 10
 
 [gitlab]
-url = http://localhost:9080
+url = http://gitlab-ce:{{ gitlab_http_port }}
 private_token = {{ gitlab_token }}

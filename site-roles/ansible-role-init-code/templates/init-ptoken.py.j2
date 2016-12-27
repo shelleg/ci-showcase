@@ -1,6 +1,6 @@
 import gitlab
 
-gl = gitlab.Gitlab('http://gitlab-ce:9080', email='{{ gitlab_user }}', password='{{ gitlab_pass }}')
+gl = gitlab.Gitlab('http://gitlab-ce:{{ gitlab_http_port }}', email='{{ gitlab_user }}', password='{{ gitlab_pass }}')
 gl.auth()
 pt = gl.user.private_token
 

@@ -41,7 +41,7 @@
 - name: "Push code"
   shell: "cd {{ code_dir }}/{{ item }}/ && \
           git remote rm origin && \
-          git remote add origin ssh://git@gitlab-ce:2244/root/{{ item }}.git && \
+          git remote add origin ssh://git@gitlab-ce:{{ gitlab_ssh_port }}/root/{{ item }}.git && \
           git push origin master"
   with_items:
   - "{{ external_code }}"
