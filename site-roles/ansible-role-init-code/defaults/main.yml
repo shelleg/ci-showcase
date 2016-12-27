@@ -1,0 +1,11 @@
+---
+# defaults file for ansible-role-init-code
+
+#Gitlab Code injection vars
+gitlab_user: "root"
+gitlab_group: "root"
+gitlab_pass: "rootroot"
+code_dir: "/opt/git"
+
+external_code:
+  - ceph
