@@ -7,5 +7,5 @@
       tags: devenv
     - role: oracle-java
       tags: java
-    - role: ansible-role-piped-jenkins
+    - role: cjenkins
       tags: jenkins
