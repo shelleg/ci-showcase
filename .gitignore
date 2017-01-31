@@ -2,3 +2,5 @@
 .idea/
 playbooks/*.retry
 .vagrant
+.ropeproject
+*.log
