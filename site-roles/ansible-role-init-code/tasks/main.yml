@@ -1,0 +1,50 @@
+---
+- name: "Add gitlab-ce to hosts"
+  lineinfile:
+    line: "{{ hostvars['localhost']['ansible_default_ipv4']['address'] }}     gitlab-ce"
+    dest: "/etc/hosts"
+  tags:
+    - hosts
+
+- name: "Deploy init-ptoken.py"
+  template:
+    src: "{{ item }}.j2"
+    dest: "/root/{{ item }}"
+    owner: "{{ gitlab_user }}"
+    group: "{{ gitlab_group }}"
+    mode: 0755
+  with_items:
+  - init-ptoken.py
+
+- name: "Initialize Private Token script"
+  shell: "python /root/init-ptoken.py"
+
+- name: "Digest secret key"
+  shell: "cat /tmp/secret.txt && rm -f /tmp/secret.txt"
+  register: ptoken
+
+- set_fact:
+    gitlab_token: "{{ ptoken.stdout_lines | join(' ')}}"
+
+- name: "Deploy Gitlab cfg"
+  template:
+    src: "{{ item }}.j2"
+    dest: "/etc/{{ item }}"
+  with_items:
+  - python-gitlab.cfg
+
+- name: "Create projects"
+  shell: "gitlab -g gitlab project create --name {{ item }}"
+  with_items:
+  - "{{ external_code }}"
+
+- name: "Push code"
+  shell: "cd {{ code_dir }}/{{ item }}/ && \
+          git remote rm origin && \
+          git remote add origin ssh://git@gitlab-ce:{{ gitlab_ssh_port }}/root/{{ item }}.git && \
+          git push origin master"
+  with_items:
+  - "{{ external_code }}"
+
+  ## TODO FIX static external code list variable.
+

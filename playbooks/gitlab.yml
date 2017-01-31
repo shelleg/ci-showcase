@@ -17,3 +17,6 @@
 
     - role: ansible-role-docker-gitlab
       tags: gitlab
+
+    - role: ansible-role-init-code
+      tags: init-code
