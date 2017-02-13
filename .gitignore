@@ -1,4 +1,4 @@
-./galaxy-roles/*
+galaxy-roles/
 .idea/
 playbooks/*.retry
 .vagrant
